@@ -1,58 +1,33 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        EVents
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <section className="flex flex-1 min-h-[calc(100vh-64px)] items-center justify-between px-8 py-12 md:px-16">
+      <div className="hidden md:block w-1/2">
+        <Image
+          src="/43052.jpg"
+          alt="Volunteering"
+          width={600}
+          height={400}
+          className="object-cover w-full h-auto"
+        />
+      </div>
+
+      <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+        <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+          Welcome to the Event Signup Board
+        </h1>
+        <p className="text-muted-foreground text-lg">
+          Discover, sign up, and participate in amazing volunteering events.
+        </p>
+        <Link href="/events">
+          <Button size="lg" className="cursor-pointer">
+            View All Events
+          </Button>
+        </Link>
+      </div>
+    </section>
   );
 }
