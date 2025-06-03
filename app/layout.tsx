@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { fetchEvents } from "@/lib/data";
 import NavBar from "@/components/ui/NavBar";
+import { EventProvider } from "@/context/EventContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,12 +21,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const events = await fetchEvents();
-  console.log("Fetched events:", events);
+
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-sans">
         <NavBar />
-        {children}
+        <EventProvider initialEvents={events}>{children}</EventProvider>
       </body>
     </html>
   );
