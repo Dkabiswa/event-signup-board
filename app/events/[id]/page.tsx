@@ -5,8 +5,8 @@ import { useParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useEventContext } from "@/context/EventContext";
 import { EventType } from "@/types/event";
-// import Comments from "@/components/ui/Comments";
 import { Clock, Calendar1, MapPin } from "lucide-react";
+import Comments from "@/components/ui/Comments";
 
 export default function EventDetailDrawer() {
   const { events } = useEventContext();
@@ -51,7 +51,7 @@ export default function EventDetailDrawer() {
         </div> */}
       </Card>
 
-      {/* <Comments eventId={event?.id || 0} /> */}
+      <Comments eventId={event?.id || 0} />
     </main>
   );
 }
