@@ -59,12 +59,6 @@ export default function EventDetailDrawer() {
             <MapPin className="w-5 h-5 inline-block" /> Worldwide
           </span>
         </div>
-
-        {/* <div className="mt-4">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
-            Join Event Now
-          </button>
-        </div> */}
       </Card>
 
       <Comments eventId={event?.id || 0} />
