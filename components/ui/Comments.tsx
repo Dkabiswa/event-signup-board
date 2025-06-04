@@ -66,7 +66,7 @@ export default function Comments({ eventId }: { eventId: number }) {
       </div>
       {loading && (
         <div className="space-y-3">
-          {Array.from({ length: 3 }).map((_, i) => (
+          {Array.from({ length: 5 }).map((_, i) => (
             <Card
               key={i}
               className="flex items-start gap-4 bg-white shadow-sm border rounded-sm px-5 py-3"
