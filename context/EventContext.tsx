@@ -1,6 +1,13 @@
 "use client";
-import { createContext, useContext, useState, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { EventType } from "@/types/event";
+import { fetchEvents } from "@/lib/data";
 
 interface EventContextType {
   events: EventType[];
@@ -11,6 +18,8 @@ interface EventContextType {
   setPage: (page: number) => void;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  refetchEvents: () => Promise<void>;
+  loading: boolean;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -22,29 +31,43 @@ export const EventProvider = ({
   initialEvents: EventType[];
   children: React.ReactNode;
 }) => {
+  const [events, setEvents] = useState<EventType[]>(initialEvents);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const EVENTS_PER_PAGE = 9;
+  const eventsPerPage = 9;
+
+  const refetchEvents = useCallback(async () => {
+    try {
+      setLoading(true);
+      const updated = await fetchEvents();
+      setEvents(updated);
+    } catch (err) {
+      console.error("Failed to refetch events:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const filteredEvents = useMemo(() => {
-    return initialEvents.filter(
+    return events.filter(
       (event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         event.body.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [initialEvents, searchTerm]);
+  }, [events, searchTerm]);
 
-  const totalPages = Math.ceil(filteredEvents.length / EVENTS_PER_PAGE);
+  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
   const paginatedEvents = useMemo(() => {
-    const start = (currentPage - 1) * EVENTS_PER_PAGE;
-    return filteredEvents.slice(start, start + EVENTS_PER_PAGE);
+    const start = (currentPage - 1) * eventsPerPage;
+    return filteredEvents.slice(start, start + eventsPerPage);
   }, [filteredEvents, currentPage]);
 
   return (
     <EventContext.Provider
       value={{
-        events: initialEvents,
+        events,
         filteredEvents,
         paginatedEvents,
         currentPage,
@@ -52,6 +75,8 @@ export const EventProvider = ({
         setPage: setCurrentPage,
         searchTerm,
         setSearchTerm,
+        refetchEvents,
+        loading,
       }}
     >
       {children}

@@ -11,6 +11,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
       },
+      colors: {
+        my_blue: "#eff3f9",
+      },
     },
   },
   plugins: [],

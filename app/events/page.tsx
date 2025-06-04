@@ -4,7 +4,7 @@ import { useEventContext } from "@/context/EventContext";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const colors = [
@@ -16,6 +16,8 @@ const colors = [
 ];
 
 export default function EventsPage() {
+  const router = useRouter();
+
   const {
     paginatedEvents,
     currentPage,
@@ -23,30 +25,42 @@ export default function EventsPage() {
     setPage,
     searchTerm,
     setSearchTerm,
+    refetchEvents,
   } = useEventContext();
+
+  const handleEventClick = (id: number) => {
+    console.log("Attempting to navigate to:", `/events/${id}`);
+    router.push(`/events/${id}`);
+  };
 
   return (
     <main className="p-6">
       <div className="flex flex-col gap-4 min-h-[calc(100vh-112px)]">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Events</h1>
-          <Input
-            type="text"
-            placeholder="Search events..."
-            value={searchTerm}
-            onChange={(e) => {
-              setPage(1);
-              setSearchTerm(e.target.value);
-            }}
-            className="w-64"
-          />
+          <h1 className="text-2xl semi-bold">Events</h1>
+          <div className="flex gap-2 items-center">
+            <Button variant="outline" onClick={() => refetchEvents()}>
+              Refresh Events
+            </Button>
+            <Input
+              type="text"
+              placeholder="Search events..."
+              value={searchTerm}
+              onChange={(e) => {
+                setPage(1);
+                setSearchTerm(e.target.value);
+              }}
+              className="w-64"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {paginatedEvents.map((event, index) => (
             <Card
               key={event.id}
-              className="flex border hover:bg-blue-50 transition-colors hover:cursor-pointer p-4 gap-2"
+              className="flex border hover:bg-my-blue transition-colors hover:cursor-pointer p-4 gap-2"
+              onClick={() => handleEventClick(event.id)}
             >
               <div
                 className={cn(
