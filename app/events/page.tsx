@@ -29,8 +29,6 @@ export default function EventsPage() {
     interestedEventIds,
   } = useEventContext();
 
-  console.log(interestedEventIds);
-
   const handleEventClick = (id: number) => {
     router.push(`/events/${id}`);
   };
