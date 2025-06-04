@@ -10,7 +10,11 @@ import { EventComment } from "@/types/event";
 import { MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function Comments({ eventId }: { eventId: number }) {
+export interface CommentsProps {
+  eventId: number;
+}
+
+export default function Comments({ eventId }: CommentsProps) {
   const [comments, setComments] = useState<EventComment[]>([]);
   const [commentBody, setCommentBody] = useState("");
   const [loading, setLoading] = useState(true);
