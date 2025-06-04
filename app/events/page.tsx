@@ -4,7 +4,7 @@ import { useEventContext } from "@/context/EventContext";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const colors = [
@@ -16,6 +16,8 @@ const colors = [
 ];
 
 export default function EventsPage() {
+  const router = useRouter();
+
   const {
     paginatedEvents,
     currentPage,
@@ -24,6 +26,11 @@ export default function EventsPage() {
     searchTerm,
     setSearchTerm,
   } = useEventContext();
+
+  const handleEventClick = (id: number) => {
+    console.log("Attempting to navigate to:", `/events/${id}`);
+    router.push(`/events/${id}`);
+  };
 
   return (
     <main className="p-6">
@@ -46,7 +53,8 @@ export default function EventsPage() {
           {paginatedEvents.map((event, index) => (
             <Card
               key={event.id}
-              className="flex border hover:bg-blue-50 transition-colors hover:cursor-pointer p-4 gap-2"
+              className="flex border hover:bg-my-blue transition-colors hover:cursor-pointer p-4 gap-2"
+              onClick={() => handleEventClick(event.id)}
             >
               <div
                 className={cn(

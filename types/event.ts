@@ -4,3 +4,11 @@ export type EventType = {
   body: string;
   userId: number;
 };
+
+export type EventComment = {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+};

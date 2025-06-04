@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <nav className="flex items-center justify-between p-4 shadow-sm bg-blue-50">
+    <nav className="flex items-center justify-between p-4 shadow-sm bg-my-blue">
       <div className="flex items-center space-x-2">
         <span className="text-xl font-bold">🎫</span>
         <span className="text-xl font-semibold">Event Signup Board</span>
