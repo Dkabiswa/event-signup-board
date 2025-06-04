@@ -20,6 +20,8 @@ interface EventContextType {
   setSearchTerm: (term: string) => void;
   refetchEvents: () => Promise<void>;
   loading: boolean;
+  interestedEventIds: number[];
+  toggleInterest: (id: number) => void;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -31,11 +33,18 @@ export const EventProvider = ({
   initialEvents: EventType[];
   children: React.ReactNode;
 }) => {
+  const eventsPerPage = 9;
   const [events, setEvents] = useState<EventType[]>(initialEvents);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const eventsPerPage = 9;
+  const [interestedEventIds, setInterestedEventIds] = useState<number[]>([]);
+
+  const toggleInterest = (id: number) => {
+    setInterestedEventIds((prev) =>
+      prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
+    );
+  };
 
   const refetchEvents = useCallback(async () => {
     try {
@@ -77,6 +86,8 @@ export const EventProvider = ({
         setSearchTerm,
         refetchEvents,
         loading,
+        interestedEventIds,
+        toggleInterest,
       }}
     >
       {children}

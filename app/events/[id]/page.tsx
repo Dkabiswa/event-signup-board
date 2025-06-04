@@ -7,9 +7,10 @@ import { useEventContext } from "@/context/EventContext";
 import { EventType } from "@/types/event";
 import { Clock, Calendar1, MapPin } from "lucide-react";
 import Comments from "@/components/ui/Comments";
+import { Button } from "@/components/ui/button";
 
 export default function EventDetailDrawer() {
-  const { events } = useEventContext();
+  const { events, interestedEventIds, toggleInterest } = useEventContext();
   const { id } = useParams();
   const [event, setEvent] = useState<EventType | undefined>(
     events.find((event) => event.id === 1) || undefined
@@ -24,11 +25,26 @@ export default function EventDetailDrawer() {
     }
   }, [id, events]);
 
+  const isInterested = event ? interestedEventIds.includes(event.id) : false;
+
   return (
     <main className="p-6 bg-my_blue min-h-calc(100vh-112px)">
       <Card className=" shadow-sm p-5 rounded-sm gap-3">
-        <div className="w-10 flex items-center justify-center font-bold text-sm bg-blue-100">
-          #{event?.id}
+        <div className="flex items-center justify-between">
+          <div className="w-10 flex items-center justify-center font-bold text-sm bg-blue-100">
+            #{event?.id}
+          </div>
+          {event && (
+            <Button
+              onClick={() => toggleInterest(event?.id)}
+              variant={isInterested ? "secondary" : "default"}
+              className={`${
+                isInterested ? "bg-green-100 text-yellow-800" : ""
+              } cursor-pointer`}
+            >
+              {isInterested ? "Marked as Interested" : "I'm Interested"}
+            </Button>
+          )}
         </div>
         <h1 className="text-2xl font-bold mb-0">{event?.title}</h1>
         <p className="mt-1 text-gray-700">{event?.body}</p>

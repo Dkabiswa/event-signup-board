@@ -26,10 +26,12 @@ export default function EventsPage() {
     searchTerm,
     setSearchTerm,
     refetchEvents,
+    interestedEventIds,
   } = useEventContext();
 
+  console.log(interestedEventIds);
+
   const handleEventClick = (id: number) => {
-    console.log("Attempting to navigate to:", `/events/${id}`);
     router.push(`/events/${id}`);
   };
 
@@ -62,13 +64,21 @@ export default function EventsPage() {
               className="flex border hover:bg-my-blue transition-colors hover:cursor-pointer p-4 gap-2"
               onClick={() => handleEventClick(event.id)}
             >
-              <div
-                className={cn(
-                  "w-10 flex items-center justify-center font-bold text-sm",
-                  colors[index % colors.length]
+              {" "}
+              <div className="flex justify-between">
+                <div
+                  className={cn(
+                    "w-10 flex items-center justify-center font-bold text-sm",
+                    colors[index % colors.length]
+                  )}
+                >
+                  #{event.id}
+                </div>
+                {interestedEventIds.includes(event.id) && (
+                  <span className="top-2 right-2 text-xs bg-green-100 text-yellow-800 px-2 py-0.5 rounded-full">
+                    Interested
+                  </span>
                 )}
-              >
-                #{event.id}
               </div>
               <CardContent className="p-0">
                 <h2 className="text-lg font-semibold mb-1">
