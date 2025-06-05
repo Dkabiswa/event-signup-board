@@ -4,6 +4,7 @@ import "./globals.css";
 import { fetchEvents } from "@/lib/data";
 import NavBar from "@/components/ui/NavBar";
 import { EventProvider } from "@/context/EventContext";
+import { use } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,12 +16,12 @@ export const metadata: Metadata = {
   description: "Find your next event to volunteer",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const events = await fetchEvents();
+  const events = use(fetchEvents());
 
   return (
     <html lang="en" className={inter.variable}>

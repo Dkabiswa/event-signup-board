@@ -35,7 +35,7 @@ export default function EventDetails() {
               </div>
 
               <Button
-                onClick={() => toggleInterest(event?.id)}
+                onClick={() => toggleInterest(event.id)}
                 variant={isInterested ? "secondary" : "default"}
                 className={`${
                   isInterested ? "bg-green-100 text-yellow-800" : ""
@@ -44,8 +44,8 @@ export default function EventDetails() {
                 {isInterested ? "Marked as Interested" : "I'm Interested"}
               </Button>
             </div>
-            <h1 className="text-2xl font-bold mb-0">{event?.title}</h1>
-            <p className="mt-1 text-gray-700">{event?.body}</p>
+            <h1 className="text-2xl font-bold mb-0">{event.title}</h1>
+            <p className="mt-1 text-gray-700">{event.body}</p>
             <div className="flex items-center text-sm text-muted-foreground space-x-4">
               <span>
                 <Calendar1 className="w-5 h-5 inline-block" /> June 6, 2025
@@ -59,7 +59,7 @@ export default function EventDetails() {
               </span>
             </div>
           </Card>
-          <Comments eventId={event?.id || 0} />
+          <Comments eventId={event.id} />
         </>
       )}
       {!event && (
